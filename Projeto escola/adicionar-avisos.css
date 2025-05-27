@@ -1,0 +1,240 @@
+/* Reset e estilos base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f9f5f0;
+  color: #3a3a3a;
+ 
+}
+
+/* Cabeçalho com navegação */
+.navbar {
+  background-color: #fffdf9;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1.5px solid #d8cfc4;
+  position: relative;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #5a4a3c;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 1px;
+}
+
+.menu ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.menu a {
+  text-decoration: none;
+  color: #6d5b4a;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.menu a:hover {
+  color: #a77e58;
+  text-decoration: underline;
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #6d5b4a;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .menu {
+    display: none;
+    flex-direction: column;
+    background-color: #fffdf9;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    border-top: 1px solid #d8cfc4;
+    z-index: 99;
+  }
+
+  .menu.active {
+    display: flex;
+  }
+
+  .menu ul {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+}
+
+/* Título */
+h1 {
+  text-align: center;
+  margin: 2rem 0 1.5rem;
+  color: #5a4a3c;
+}
+
+/* Formulário */
+form {
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+  background: #fffdf9;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(168, 144, 110, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+label {
+  font-weight: 600;
+  color: #5a4a3c;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1.5px solid #d8cfc4;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  color: #3a3a3a;
+  background-color: #fefcf9;
+}
+
+textarea:focus {
+  border-color: #a77e58;
+  outline: none;
+}
+
+button {
+  align-self: flex-end;
+  background-color: #a77e58;
+  color: white;
+  font-weight: 700;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #8a6a43;
+}
+
+/* Container dos post-its */
+.postit-container {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.6rem;
+  justify-content: flex-start;
+}
+
+/* Post-its */
+.postit {
+  background: #fffb8f;
+  width: 200px;
+  min-height: 150px;
+  padding: 1rem 1.2rem;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  font-weight: 600;
+  color: #5a4a3c;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  user-select: none;
+  cursor: default;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background-blend-mode: multiply;
+}
+
+.postit:hover {
+  transform: scale(1.05);
+  box-shadow: 7px 7px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Variedade de cores suaves */
+.postit:nth-child(3n) {
+  background: #a4866a;
+}
+.postit:nth-child(3n+1) {
+  background: #d6a373;
+}
+.postit:nth-child(3n+2) {
+  background: #bb9572;
+}
+main {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background:  #d8cfc4;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      font-family: 'Montserrat', sans-serif;
+    }
+     button {
+      margin-top: 1rem;
+      padding: 10px;
+      background-color: #a77e58;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #5a4a3c;
+    }
+    .btn-add {
+  position: fixed;
+  top: 40rem;
+  right: 1.5rem;
+  background-color: #a77e58;
+  border: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(167,126,88,0.6);
+  transition: background-color 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  z-index: 100;
+}
+
+.btn-add:hover {
+  background-color: #8a6a43;
+  box-shadow: 0 7px 25px rgba(138,106,67,0.8);
+}

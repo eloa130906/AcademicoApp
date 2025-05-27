@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Matrículas - Acadêmico App</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="dashboard.css" />
+
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">Acadêmico App 🌿</div>
+    <nav class="menu" id="menu">
+      <ul>
+        <li><a href="secretaria.html">Início</a></li>
+        <li><a href="matricula.html">Matrículas</a></li>
+        <li><a href="avisos-secretaria.html">Avisos</a></li>
+        <li><a href="perfil-secretaria.html">Perfil</a></li>
+        <li><a href="login.html">Sair</a></li>
+      </ul>
+    </nav>
+    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+  </header>
+
+  <main>
+    <h1>Cadastro de Aluno</h1>
+   <form id="formMatricula">
+  <!-- Campos do formulário -->
+  <label for="nome">Nome do Aluno:</label>
+  <input type="text" id="nome" name="nome" required />
+
+  <label for="endereco">Endereço:</label>
+  <input type="text" id="endereco" name="endereco" required />
+
+  <label for="curso">Curso:</label>
+  <input type="text" id="curso" name="curso" required />
+
+  <label for="periodo">Período:</label>
+  <select id="periodo" name="periodo" required>
+    <option value="">Selecione...</option>
+    <option value="Manhã">Manhã</option>
+    <option value="Tarde">Tarde</option>
+    <option value="Noite">Noite</option>
+  </select>
+
+  <label for="email">E-mail:</label>
+  <input type="email" id="email" name="email" required />
+
+  <label for="telefone">Telefone:</label>
+  <input type="tel" id="telefone" name="telefone" required />
+
+  <button type="submit">Cadastrar Aluno</button>
+</form>
+
+<script>
+  document.getElementById('formMatricula').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const aluno = {
+      nome: document.getElementById('nome').value,
+      endereco: document.getElementById('endereco').value,
+      curso: document.getElementById('curso').value,
+      periodo: document.getElementById('periodo').value,
+      email: document.getElementById('email').value,
+      telefone: document.getElementById('telefone').value
+    };
+
+    // Recupera os alunos já cadastrados
+    const alunos = JSON.parse(localStorage.getItem('alunos')) || [];
+
+    // Adiciona o novo aluno
+    alunos.push(aluno);
+
+    // Salva no localStorage
+    localStorage.setItem('alunos', JSON.stringify(alunos));
+
+    alert('Aluno cadastrado com sucesso!');
+
+    // Redireciona para a página matricula.html para mostrar os post-its
+    window.location.href = 'matricula.html';
+  });
+</script>
+</body>
+</html>
