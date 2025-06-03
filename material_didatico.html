@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Material Didático - Acadêmico App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="material_didatico.css" />
+</head>
+<body>
+
+<header>
+  <div class="logo">Acadêmico App 🌿</div>
+  <nav>
+    <a href="professor.html">Início</a>
+    <a href="login.html">Sair</a>
+  </nav>
+</header>
+
+<main>
+  <h1>Material Didático</h1>
+  <p>Adicione e organize seus recursos didáticos com facilidade.</p>
+
+  <form id="formRecurso">
+    <input type="text" id="titulo" placeholder="Título do material" required />
+    <select id="tipo" required>
+      <option value="" disabled selected>Tipo de recurso</option>
+      <option value="documento">📄 Documento</option>
+      <option value="video">🎬 Vídeo</option>
+      <option value="link">🔗 Link</option>
+    </select>
+    <input type="text" id="link" placeholder="URL ou caminho do arquivo" required />
+    <button type="submit">Adicionar</button>
+  </form>
+
+  <div class="cards-container" id="recursosContainer">
+    <p class="empty-message" id="emptyMessage">Nenhum recurso adicionado ainda.</p>
+  </div>
+</main>
+
+<script>
+  const form = document.getElementById('formRecurso');
+  const container = document.getElementById('recursosContainer');
+  const emptyMsg = document.getElementById('emptyMessage');
+
+  const icons = {
+    documento: '📄',
+    video: '🎬',
+    link: '🔗'
+  };
+
+  function criarCard(titulo, tipo, link) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+
+    card.innerHTML = `
+      <button class="btn-delete" title="Remover recurso">×</button>
+      <div class="type-icon">${icons[tipo] || '📁'}</div>
+      <h3>${titulo}</h3>
+      <a href="${link}" target="_blank" rel="noopener noreferrer">${link}</a>
+    `;
+
+    card.querySelector('.btn-delete').addEventListener('click', () => {
+      card.remove();
+      checarVazio();
+    });
+
+    return card;
+  }
+
+  function checarVazio() {
+    if (container.children.length === 0) {
+      emptyMsg.style.display = 'block';
+    } else {
+      emptyMsg.style.display = 'none';
+    }
+  }
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const titulo = form.titulo.value.trim();
+    const tipo = form.tipo.value;
+    const link = form.link.value.trim();
+
+    if (!titulo || !tipo || !link) return;
+
+    const novoCard = criarCard(titulo, tipo, link);
+    container.appendChild(novoCard);
+
+    form.reset();
+    form.tipo.selectedIndex = 0;
+
+    checarVazio();
+  });
+
+  checarVazio();
+</script>
+
+</body>
+</html>

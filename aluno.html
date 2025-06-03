@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard Aluno - Acadêmico App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">Acadêmico App 🌿</div>
+    <nav class="menu">
+      <ul>
+        <li><a href="dados.html">Meus Dados</a></li>
+        <li><a href="plano.html">Plano de Aula</a></li>
+        <li><a href="aulas.html">Aulas Ministradas</a></li>
+        <li><a href="frequencia.html">Frequência</a></li>
+        <li><a href="perfil.html">Perfil</a></li>
+        <li><a href="login.html">Sair</a></li>
+      </ul>
+    </nav>
+    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+  </header>
+  
+
+  <main class="dashboard-container">
+    <section class="welcome">
+      <h1>Bem-vindo(a), estudante!</h1>
+      <p>Confira seus dados e acompanhe seu progresso.</p>
+    </section>
+
+    <section class="cards">
+  
+      <a href="plano.html" class="card">
+        <h2>Plano de Aulas</h2>
+        <p>Confira o conteúdo planejado para suas aulas.</p>
+      </a>
+  
+      <a href="aulas.html" class="card">
+        <h2>Aulas Ministradas</h2>
+        <p>Veja o histórico de aulas já realizadas.</p>
+      </a>
+  
+      <a href="frequencia.html" class="card">
+        <h2>Frequência</h2>
+        <p>Acompanhe suas presenças e faltas.</p>
+      </a>
+  
+      <a href="perfil.html" class="card">
+        <h2>Editar Perfil</h2>
+        <p>Atualize seus dados.</p>
+      </a>
+  
+      <a href="avisos.html" class="card">
+        <h2>Avisos</h2>
+        <p>Fique por dentro dos comunicados.</p>
+      </a>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 Acadêmico App. Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    const toggle = document.getElementById("menu-toggle");
+    const menu = document.querySelector(".menu");
+    toggle.addEventListener("click", () => {
+      menu.classList.toggle("active");
+    });
+  </script>
+</body>
+</html>

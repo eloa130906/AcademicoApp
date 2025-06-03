@@ -1,0 +1,217 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f9f5f0;
+  color: #3a3a3a;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+  margin: 0;
+}
+
+header {
+  width: 100%;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fffdf9;
+  padding: 1rem 2rem;
+  border-radius: 0;
+  box-shadow: 0 4px 15px rgba(167, 126, 88, 0.2);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+body > main {
+  margin-top: 5.5rem;
+  width: 100%;
+  max-width: 900px;
+  background: #fffdf9;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(167, 126, 88, 0.2);
+  padding: 2rem 3rem 3rem;
+}
+
+header .logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #5a4a3c;
+  user-select: none;
+}
+
+header nav a {
+  text-decoration: none;
+  color: #6d5b4a;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-left: 1.8rem;
+  transition: color 0.3s ease;
+}
+header nav a:hover {
+  color: #a77e58;
+  text-decoration: underline;
+}
+
+main h1 {
+  color: #5a4a3c;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  font-size: 2.4rem;
+  text-align: center;
+}
+main p {
+  color: #6d5b4a;
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Formulário */
+form {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+form input[type="text"],
+form select {
+  padding: 0.7rem 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  min-width: 180px;
+  transition: border-color 0.3s ease;
+}
+form input[type="text"]:focus,
+form select:focus {
+  border-color: #a77e58;
+  outline: none;
+}
+
+form button {
+  padding: 0 2.5rem;
+  background-color: #a77e58;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1.1rem;
+  min-height: 42px;
+  align-self: center;
+}
+form button:hover {
+  background-color: #8a6644;
+}
+
+/* Container dos cards */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.8rem;
+}
+
+/* Card */
+.card {
+  background-color: #fffdf9;
+  border-left: 6px solid #a77e58;
+  box-shadow: 0 5px 15px rgba(167, 126, 88, 0.18);
+  border-radius: 14px;
+  padding: 1.5rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+  transition: transform 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(167, 126, 88, 0.35);
+}
+
+.card h3 {
+  color: #5a4a3c;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.card .type-icon {
+  font-size: 1.5rem;
+  color: #a77e58;
+  margin-bottom: 0.4rem;
+  user-select: none;
+}
+
+.card a {
+  color: #6d5b4a;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px dashed transparent;
+  transition: border-bottom 0.3s ease;
+  word-break: break-all;
+}
+.card a:hover {
+  border-bottom: 1px dashed #a77e58;
+  color: #a77e58;
+}
+
+/* Botão excluir */
+.btn-delete {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.3rem;
+  color: #a77e58;
+  cursor: pointer;
+  font-weight: 700;
+  transition: color 0.3s ease;
+  user-select: none;
+}
+.btn-delete:hover {
+  color: #8a6644;
+}
+
+/* Mensagem quando não tem recursos */
+.empty-message {
+  text-align: center;
+  color: #6d5b4a;
+  font-style: italic;
+  margin-top: 2rem;
+  font-size: 1.1rem;
+  user-select: none;
+}
+
+@media (max-width: 600px) {
+  main {
+    padding: 1.5rem 1.5rem 2rem;
+  }
+  form {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  form input[type="text"],
+  form select,
+  form button {
+    min-width: 100%;
+  }
+}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Plano de Aula - Acadêmico App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="dashboard.css" />
+</head> 
+<body>
+  <header class="navbar">
+    <div class="logo">Acadêmico App 🌿</div>
+    <nav class="menu">
+      <ul>
+        <li><a href="professor.html">Início</a></li>
+        <li><a href="login.html">Sair</a></li>
+      </ul>
+    </nav>
+    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+  </header>
+
+  <main class="dashboard-container">
+    <section class="welcome">
+      <h1>Plano de Aula</h1>
+      <p>Crie e consulte seus planos de aula.</p>
+    </section>
+
+    <!-- Formulário de Criação -->
+    <section class="formulario-plano">
+      <h2>Criar Plano</h2>
+      <form id="formPlano">
+        <label for="data">Data:</label>
+        <input type="date" id="data" required />
+
+        <label for="turma">Turma:</label>
+        <input type="text" id="turma" placeholder="Ex: Ensino Médio" required />
+
+        <label for="tema">Tema:</label>
+        <input type="text" id="tema" required />
+
+        <label for="objetivos">Objetivos:</label>
+        <textarea id="objetivos" rows="3" required></textarea>
+
+        <label for="atividades">Atividades:</label>
+        <textarea id="atividades" rows="3" required></textarea>
+
+        <button type="submit">Salvar Plano</button>
+      </form>
+    </section>
+
+    <!-- Lista de Planos -->
+    
+    <section class="lista-planos">
+    <center><h2>📘 Planos Criados</h2></center>
+    <div id="planosSalvos" class="planos-container">
+        <!-- Os planos criados aparecerão aqui como cartões -->
+  </div>
+    </section>
+  </main>
+
+  <script>
+    const toggle = document.getElementById("menu-toggle");
+    const menu = document.querySelector(".menu");
+    toggle.addEventListener("click", () => {
+      menu.classList.toggle("active");
+    });
+
+    const form = document.getElementById("formPlano");
+    const lista = document.getElementById("planosSalvos");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const data = document.getElementById("data").value;
+      const turma = document.getElementById("turma").value;
+      const tema = document.getElementById("tema").value;
+      const objetivos = document.getElementById("objetivos").value;
+      const atividades = document.getElementById("atividades").value;
+
+      const item = document.createElement("li");
+        item.classList.add("plano-card");
+        item.innerHTML = `
+        <div class="plano-topo">
+            <span class="plano-data">${data}</span>
+            <span class="plano-turma">${turma}</span>
+        </div>
+        <h3>${tema}</h3>
+        <p><strong>Objetivos:</strong> ${objetivos}</p>
+        <p><strong>Atividades:</strong> ${atividades}</p>
+        `;
+
+
+      lista.appendChild(item);
+      form.reset();
+    });
+  </script>
+</body>
+</html>

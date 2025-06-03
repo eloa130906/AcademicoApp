@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Editar Perfil - Acadêmico App</title>
+  <link rel="stylesheet" href="perfil_professor.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">Acadêmico App 🌿</div>
+    <nav class="menu">
+      <ul>
+        <li><a href="professor.html">Início</a></li>
+        <li><a href="visualizar_perfil.html">Ver Perfil</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="dashboard-container">
+    <h1>Editar Perfil</h1>
+
+    <form id="perfilForm">
+      <label for="nome">Nome</label>
+      <input type="text" id="nome" />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" />
+
+      <label for="disciplina">Disciplina</label>
+      <input type="text" id="disciplina" />
+
+      <label for="formacao">Formação</label>
+      <input type="text" id="formacao" />
+
+      <label for="bio">Biografia</label>
+      <textarea id="bio"></textarea>
+
+      <center><button type="submit">Salvar</button>
+     
+    </form>
+
+   
+  </main>
+
+  <script>
+    // Carrega os dados salvos (se existirem)
+    const perfil = JSON.parse(localStorage.getItem("perfilProfessor")) || {};
+
+    document.getElementById("nome").value = perfil.nome || "";
+    document.getElementById("email").value = perfil.email || "";
+    document.getElementById("disciplina").value = perfil.disciplina || "";
+    document.getElementById("formacao").value = perfil.formacao || "";
+    document.getElementById("bio").value = perfil.bio || "";
+
+    // Salva ao enviar o formulário
+    document.getElementById("perfilForm").addEventListener("submit", function (e) {
+      e.preventDefault(); // impede recarregamento
+
+      const dadosAtualizados = {
+        nome: document.getElementById("nome").value,
+        email: document.getElementById("email").value,
+        disciplina: document.getElementById("disciplina").value,
+        formacao: document.getElementById("formacao").value,
+        bio: document.getElementById("bio").value,
+      };
+
+      localStorage.setItem("perfilProfessor", JSON.stringify(dadosAtualizados));
+      alert("Perfil salvo com sucesso!");
+    });
+  </script>
+</body>
+</html>

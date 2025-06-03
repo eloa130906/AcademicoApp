@@ -1,0 +1,222 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f1f5f9;
+  color: #1e293b;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+}
+
+/* Cabeçalho */
+header {
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+header .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0f172a;
+}
+
+header nav a {
+  text-decoration: none;
+  color: #334155;
+  margin-left: 1.5rem;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+header nav a:hover {
+  color: #2563eb;
+}
+
+/* Conteúdo principal */
+main {
+  width: 100%;
+  max-width: 960px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+main h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  color: #0f172a;
+}
+
+main p {
+  text-align: center;
+  color: #475569;
+  margin-bottom: 2rem;
+}
+
+/* Calendário */
+.calendar-section {
+  margin-bottom: 2rem;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.calendar-header button {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.3rem 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.calendar-header button:hover {
+  background-color: #1d4ed8;
+}
+
+#monthYear {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #1e293b;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.3rem;
+  text-align: center;
+}
+
+.day-name {
+  font-weight: bold;
+  color: #2563eb;
+}
+
+.calendar-day {
+  padding: 0.8rem 0;
+  background-color: #e2e8f0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.calendar-day:hover {
+  background-color: #cbd5e1;
+}
+
+.calendar-day.selected {
+  background-color: #2563eb;
+  color: white;
+}
+
+.calendar-day.inactive {
+  background-color: transparent;
+  color: transparent;
+  cursor: default;
+}
+
+/* Disponibilidade */
+.availability-wrapper {
+  border-top: 2px solid #cbd5e1;
+  padding-top: 1rem;
+}
+
+#selectedDateHeading {
+  text-align: center;
+  font-weight: bold;
+  color: #1e293b;
+  margin-bottom: 1rem;
+}
+
+.availability-list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.availability-list li {
+  padding: 0.4rem;
+  color: #334155;
+  font-weight: 500;
+}
+
+.availability-list li button {
+  margin-left: 8px;
+  background: none;
+  border: none;
+  color: #ef4444;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.availability-list li button:hover {
+  color: #b91c1c;
+}
+
+/* Formulário */
+form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+form label {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+form input[type="time"] {
+  padding: 0.4rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-family: inherit;
+}
+
+form input[type="time"]:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+form button {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+form button:hover {
+  background-color: #1d4ed8;
+}

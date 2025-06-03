@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agenda e Disponibilidade</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="agenda.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">Minha Agenda</div>
+    <nav>
+      <a href="#">Início</a>
+      <a href="#">Agenda</a>
+      <a href="#">Sair</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Agenda e Disponibilidade</h1>
+    <p>Gerencie seus horários disponíveis e visualize seu calendário.</p>
+
+    <section class="calendar-section">
+      <div class="calendar-header">
+        <button id="prevMonth" aria-label="Mês anterior">&lt;</button>
+        <h2 id="monthYear">Mês Ano</h2>
+        <button id="nextMonth" aria-label="Próximo mês">&gt;</button>
+      </div>
+      <div class="calendar-grid">
+        <div class="day-name">Dom</div>
+        <div class="day-name">Seg</div>
+        <div class="day-name">Ter</div>
+        <div class="day-name">Qua</div>
+        <div class="day-name">Qui</div>
+        <div class="day-name">Sex</div>
+        <div class="day-name">Sáb</div>
+      </div>
+    </section>
+
+    <section class="availability-wrapper">
+      <h2 id="selectedDateHeading">Disponibilidade para --/--/----</h2>
+      <ul class="availability-list" id="availabilityList"></ul>
+
+      <form id="availabilityForm">
+        <label for="startTime">Início</label>
+        <input type="time" id="startTime" required />
+        <label for="endTime">Fim</label>
+        <input type="time" id="endTime" required />
+        <button type="submit">Adicionar Horário</button>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    const monthYear = document.getElementById("monthYear");
+    const calendarGrid = document.querySelector(".calendar-grid");
+    const prevMonthBtn = document.getElementById("prevMonth");
+    const nextMonthBtn = document.getElementById("nextMonth");
+    const availabilityList = document.getElementById("availabilityList");
+    const availabilityForm = document.getElementById("availabilityForm");
+    const selectedDateHeading = document.getElementById("selectedDateHeading");
+
+    let currentDate = new Date();
+    currentDate.setDate(1);
+    let selectedDate = new Date();
+
+    const availabilityData = {};
+
+    function formatDateKey(date) {
+      return date.toISOString().split('T')[0];
+    }
+
+    function updateSelectedDateHeading() {
+      const d = selectedDate;
+      selectedDateHeading.textContent = `Disponibilidade para ${d.getDate().toString().padStart(2, '0')}/${(d.getMonth()+1).toString().padStart(2, '0')}/${d.getFullYear()}`;
+    }
+
+    function renderCalendar() {
+      const monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+      monthYear.textContent = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+
+      while (calendarGrid.children.length > 7) {
+        calendarGrid.removeChild(calendarGrid.lastChild);
+      }
+
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth();
+      const firstDayWeekday = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      for (let i = 0; i < firstDayWeekday; i++) {
+        const emptyDay = document.createElement("div");
+        emptyDay.classList.add("calendar-day", "inactive");
+        calendarGrid.appendChild(emptyDay);
+      }
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dayDiv = document.createElement("div");
+        dayDiv.classList.add("calendar-day");
+        dayDiv.textContent = day;
+
+        const thisDate = new Date(year, month, day);
+
+        if (
+          thisDate.getDate() === selectedDate.getDate() &&
+          thisDate.getMonth() === selectedDate.getMonth() &&
+          thisDate.getFullYear() === selectedDate.getFullYear()
+        ) {
+          dayDiv.classList.add("selected");
+        }
+
+        dayDiv.addEventListener("click", () => {
+          selectedDate = thisDate;
+          renderCalendar();
+          renderAvailabilityList();
+          updateSelectedDateHeading();
+        });
+
+        calendarGrid.appendChild(dayDiv);
+      }
+    }
+
+    function renderAvailabilityList() {
+      availabilityList.innerHTML = "";
+
+      const key = formatDateKey(selectedDate);
+      const times = availabilityData[key] || [];
+
+      if (times.length === 0) {
+        const li = document.createElement("li");
+        li.textContent = "Nenhum horário disponível.";
+        li.style.fontStyle = "italic";
+        li.style.color = "#6d5b4a";
+        availabilityList.appendChild(li);
+        return;
+      }
+
+      times.forEach((time, index) => {
+        const li = document.createElement("li");
+        li.textContent = `${time.start} - ${time.end}`;
+
+        const btnRemove = document.createElement("button");
+        btnRemove.textContent = "✕";
+        btnRemove.style.marginLeft = "10px";
+        btnRemove.style.color = "#a77e58";
+        btnRemove.style.background = "transparent";
+        btnRemove.style.border = "none";
+        btnRemove.style.cursor = "pointer";
+        btnRemove.style.fontWeight = "700";
+        btnRemove.addEventListener("click", () => {
+          times.splice(index, 1);
+          availabilityData[key] = times;
+          renderAvailabilityList();
+        });
+
+        li.appendChild(btnRemove);
+        availabilityList.appendChild(li);
+      });
+    }
+
+    availabilityForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const startTime = availabilityForm.startTime.value;
+      const endTime = availabilityForm.endTime.value;
+
+      if (startTime >= endTime) {
+        alert("O horário de início deve ser antes do horário de fim.");
+        return;
+      }
+
+      const key = formatDateKey(selectedDate);
+      if (!availabilityData[key]) {
+        availabilityData[key] = [];
+      }
+
+      availabilityData[key].push({ start: startTime, end: endTime });
+
+      availabilityForm.reset();
+      renderAvailabilityList();
+    });
+
+    prevMonthBtn.addEventListener("click", () => {
+      currentDate.setMonth(currentDate.getMonth() - 1);
+      renderCalendar();
+    });
+
+    nextMonthBtn.addEventListener("click", () => {
+      currentDate.setMonth(currentDate.getMonth() + 1);
+      renderCalendar();
+    });
+
+    renderCalendar();
+    renderAvailabilityList();
+    updateSelectedDateHeading();
+  </script>
+</body>
+</html>
