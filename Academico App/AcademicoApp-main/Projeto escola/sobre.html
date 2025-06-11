@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sobre</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">Acadêmico App 🌿</div>
+    <div class="menu-toggle" id="menu-toggle">☰</div>
+    <div class="menu">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+        <li><a href="cursos.html">Cursos</a></li>
+        <li><a href="contato.html">Contato</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="sobre">
+    <div class="sobre-container">
+      <h2>Sobre a Escola</h2>
+      <p>
+        A escola é um projeto social que oferece cursinhos gratuitos para a comunidade local, com foco em preparar alunos para vestibulares, vestibulinhos e concursos.
+        Todos os professores atuam de forma voluntária, dedicando seu tempo e conhecimento para mudar realidades através da educação.
+      </p>
+      <p>
+        No entanto, muitos processos internos da escola ainda são feitos manualmente, como o registro de matrículas, controle de frequência dos alunos,
+        planejamento das aulas e gestão das aulas ministradas. Além disso, é necessário organizar a disponibilidade e a alocação dos professores de forma eficiente.
+      </p>
+      <p>
+        Diante desses desafios, o <strong>Acadêmico App</strong> surge como uma solução tecnológica que busca profissionalizar a administração da escola, ao mesmo tempo em que mantém seu caráter humano e comunitário.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Acadêmico App – Desenvolvido com carinho para transformar a educação.</p>
+  </footer>
+
+  <script>
+    const toggle = document.getElementById("menu-toggle");
+    const menu = document.querySelector(".menu");
+    toggle.addEventListener("click", () => {
+      menu.classList.toggle("active");
+    });
+  </script>
+
+</body>
+</html>

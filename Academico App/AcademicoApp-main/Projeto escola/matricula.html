@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Matrículas</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="adicionar-avisos.css" />
+
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">Acadêmico App 🌿</div>
+    <nav class="menu" id="menu">
+      <ul>
+        <li><a href="secretaria.html">Início</a></li>
+        <li><a href="matricula.html">Cadastro</a></li>
+        <li><a href="avisos-secretaria.html">Avisos</a></li>
+        <li><a href="perfil-secretaria.html">Perfil</a></li>
+        <li><a href="login.html">Sair</a></li>
+      </ul>
+    </nav>
+    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+  </header>
+
+  <main>
+    <h1>Usuario cadastrados</h1>
+    <div class="usuario-card-container" id="usuarioContainer"></div>
+  </main>
+
+  <button class="btn-add" onclick="window.location.href='adicionar-matricula.html'" aria-label="Adicionar aviso">+</button>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('usuarioContainer');
+    const alunos = JSON.parse(localStorage.getItem('alunos')) || [];
+
+    function salvarAlunos() {
+      localStorage.setItem('alunos', JSON.stringify(alunos));
+    }
+
+    function criarCard(aluno, index) {
+      const card = document.createElement('div');
+      card.classList.add('usuario-card');
+
+      const btnDelete = document.createElement('button');
+      btnDelete.classList.add('btn-delete');
+      btnDelete.innerHTML = '🗑️';
+      btnDelete.setAttribute('aria-label', 'Excluir matrícula');
+
+      btnDelete.addEventListener('click', () => {
+        alunos.splice(index, 1);
+        salvarAlunos();
+        renderizarCards();
+      });
+
+      card.innerHTML = `
+        <h2>${aluno.nome} <span class="tipo">(${aluno.tipo})</span></h2>
+        <p><strong>Endereço:</strong> ${aluno.endereco}</p>
+        <p><strong>Curso:</strong> ${aluno.curso}</p>
+        <p><strong>Período:</strong> ${aluno.periodo}</p>
+        <p><strong>Email:</strong> ${aluno.email}</p>
+        <p><strong>Telefone:</strong> ${aluno.telefone}</p>
+        <p><strong>Senha:</strong> ${aluno.senha}</p>
+      `;
+
+      card.appendChild(btnDelete);
+      container.appendChild(card);
+    }
+
+    function renderizarCards() {
+      container.innerHTML = '';
+      alunos.forEach((aluno, index) => criarCard(aluno, index));
+    }
+
+    renderizarCards();
+  });
+</script>
+
+
+</body>
+</html>

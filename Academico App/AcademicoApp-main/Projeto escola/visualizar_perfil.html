@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Perfil do Professor</title>
+  <link rel="stylesheet" href="perfil_professor.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">Acadêmico App 🌿</div>
+    <nav class="menu">
+      <ul>
+        <li><a href="professor.html">Início</a></li>
+        <li><a href="editar_perfil.html">Editar Perfil</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="dashboard-container">
+    <h1>Perfil do Professor</h1>
+
+    <div class="foto-container">
+      <img id="fotoPerfil" src="default-avatar.png" alt="Foto de Perfil" />
+    </div>
+
+    <div class="perfil-info">
+      <div class="info-bloco">
+        <label class="label">Nome:</label>
+        <p id="nomePerfil" class="info-text"></p>
+      </div>
+      <div class="info-bloco">
+        <label class="label">Email:</label>
+        <p id="emailPerfil" class="info-text"></p>
+      </div>
+      <div class="info-bloco">
+        <label class="label">Disciplina:</label>
+        <p id="disciplinaPerfil" class="info-text"></p>
+      </div>
+      <div class="info-bloco">
+        <label class="label">Formação:</label>
+        <p id="formacaoPerfil" class="info-text"></p>
+      </div>
+      <div class="info-bloco">
+        <label class="label">Biografia:</label>
+        <p id="bioPerfil" class="info-text"></p>
+      </div>
+    </div>
+
+    <center><a href="professor.html" class="btn-voltar">Voltar</a></center>
+  </main>
+
+  <script>
+    const perfil = JSON.parse(localStorage.getItem("perfilProfessor")) || {};
+
+    document.getElementById("nomePerfil").textContent = perfil.nome || "Não informado";
+    document.getElementById("emailPerfil").textContent = perfil.email || "Não informado";
+    document.getElementById("disciplinaPerfil").textContent = perfil.disciplina || "Não informado";
+    document.getElementById("formacaoPerfil").textContent = perfil.formacao || "Não informado";
+    document.getElementById("bioPerfil").textContent = perfil.bio || "Não informado";
+
+    if (perfil.foto) {
+      document.getElementById("fotoPerfil").src = perfil.foto;
+    }
+  </script>
+</body>
+</html>

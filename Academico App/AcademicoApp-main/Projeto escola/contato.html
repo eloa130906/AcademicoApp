@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contato</title>
+  <link rel="stylesheet" href="style.css" />
+
+</head>
+<body>
+  <header class="navbar">
+  <div class="logo">Acadêmico App 🌿</div>
+  <nav class="menu">
+    <ul>
+      <li><a href="index.html">Início</a></li>
+      <li><a href="sobre.html">Sobre</a></li>
+      <li><a href="cursos.html">Cursos</a></li>
+      <li><a href="contato.html">Contato</a></li>
+      <li><a href="login.html">Login</a></li>
+    </ul>
+  </nav>
+
+  <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+</header>
+
+  <main class="contato-container">
+    <div class="contato-info">
+      <h2>Informações de Contato</h2>
+      <ul>
+        <li><strong>Endereço:</strong> Rua X, número X – Bairro X, Cidade X</li>
+        <li><strong>Telefone:</strong> (XX) XXXXX-XXXX</li>
+        <li><strong>E-mail:</strong> xxxxx@xxxxxx.xxx</li>
+        <li><strong>Horário de atendimento:</strong> Segunda a sexta, das 8h às 17h</li>
+      </ul>
+    </div>
+
+    <div class="contato-form">
+      <h2>Envie uma mensagem</h2>
+      <form action="#" method="post">
+        <input type="text" name="nome" placeholder="Seu nome" required>
+        <input type="email" name="email" placeholder="Seu e-mail" required>
+        <input type="text" name="assunto" placeholder="Assunto" required>
+        <textarea name="mensagem" rows="5" placeholder="Sua mensagem..." required></textarea>
+        <button type="submit" class="ripple">Enviar</button>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Acadêmico App – Desenvolvido com carinho para transformar a educação.</p>
+  </footer>
+
+ <script>
+  const toggle = document.getElementById("menu-toggle");
+  const menu = document.querySelector(".menu");
+  toggle.addEventListener("click", () => {
+    menu.classList.toggle("active");
+   
+  });
+</script>
+<script src="ripple.js"></script>
+</body>
+</html>

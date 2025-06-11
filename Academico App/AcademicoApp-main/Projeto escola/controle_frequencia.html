@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Controle de Frequência</title>
+  <link rel="stylesheet" href="controle_frequencia.css" />
+</head>
+<body>
+  <header>
+  <nav class="navbar">
+    <div class="logo">Acadêmico App 🌿</div>
+    <div class="menu">
+      <ul>
+        <li><a href="professor.html">Início</a></li>
+      </ul>
+    </div>
+  </nav>
+  </header>
+  <main class="dashboard-container">
+    <h1>Controle de Frequência</h1>
+
+    <section>
+      <form id="formFrequencia">
+        <label for="dataAula">Data da Aula:</label>
+        <input type="date" id="dataAula" required />
+
+        <label for="turma">Turma:</label>
+        <select id="turma" required>
+          <option value="">Selecione</option>
+          <option>Ensino Médio</option>
+          <option>Pré Vestibulinho</option>
+          <option>Pré Vestibular</option>
+          <option>Empreendedorismo</option>
+        </select>
+
+        <button type="submit">Adicionar Aula</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>Aulas Registradas</h2>
+      <table id="tabelaAulas">
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Turma</th>
+            <th>Alunos</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Aulas vão aparecer aqui -->
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Adicionar/Editar Alunos na Aula</h2>
+      <form id="formAlunos" style="display:none;">
+        <input type="hidden" id="indexAulaAtual" />
+        <label for="nomeAluno">Nome do Aluno:</label>
+        <input type="text" id="nomeAluno" required />
+        <button type="submit">Adicionar Aluno</button>
+      </form>
+    </section>
+
+    <section id="frequenciaSection" style="display:none;">
+      <h2>Registrar Presença/Falta</h2>
+      <table id="tabelaAlunosFrequencia">
+        <thead>
+          <tr>
+            <th>Aluno</th>
+            <th>Presente</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Lista de alunos com checkbox -->
+        </tbody>
+      </table>
+      <button id="salvarFrequenciaBtn" style="margin-top: 12px;">Salvar Frequência</button>
+    </section>
+
+    <section id="relatorioSection" style="display:none;">
+      <h2>Relatório de Frequência</h2>
+      <table id="tabelaRelatorio">
+        <thead>
+          <tr>
+            <th>Aluno</th>
+            <th>Presenças</th>
+            <th>Faltas</th>
+            <th>% Presença</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Dados do relatório -->
+        </tbody>
+      </table>
+      <button id="btnImprimir" style="margin-top: 12px;">Imprimir Relatório</button>
+    </section>
+  </main>
+
+<script>
+  // Dados armazenados no localStorage
+  let aulas = JSON.parse(localStorage.getItem('aulasFrequencia')) || [];
+
+  const formFrequencia = document.getElementById('formFrequencia');
+  const tabelaAulasBody = document.querySelector('#tabelaAulas tbody');
+  const formAlunos = document.getElementById('formAlunos');
+  const nomeAlunoInput = document.getElementById('nomeAluno');
+  const indexAulaAtualInput = document.getElementById('indexAulaAtual');
+  const frequenciaSection = document.getElementById('frequenciaSection');
+  const tabelaAlunosFrequenciaBody = document.querySelector('#tabelaAlunosFrequencia tbody');
+  const salvarFrequenciaBtn = document.getElementById('salvarFrequenciaBtn');
+  const relatorioSection = document.getElementById('relatorioSection');
+  const tabelaRelatorioBody = document.querySelector('#tabelaRelatorio tbody');
+  const btnImprimir = document.getElementById('btnImprimir');
+
+  // Renderizar aulas na tabela principal
+  function renderizarAulas() {
+    tabelaAulasBody.innerHTML = '';
+    aulas.forEach((aula, i) => {
+      const tr = document.createElement('tr');
+
+      // Colunas data e turma
+      const tdData = document.createElement('td');
+      tdData.textContent = aula.data;
+      tr.appendChild(tdData);
+
+      const tdTurma = document.createElement('td');
+      tdTurma.textContent = aula.turma;
+      tr.appendChild(tdTurma);
+
+      // Coluna alunos (número e botão para editar)
+      const tdAlunos = document.createElement('td');
+      tdAlunos.textContent = aula.alunos.length + ' aluno(s)';
+      tr.appendChild(tdAlunos);
+
+      // Coluna ações: editar alunos, registrar frequência, excluir aula
+      const tdAcoes = document.createElement('td');
+
+      const btnEditar = document.createElement('button');
+      btnEditar.textContent = 'Editar Alunos';
+      btnEditar.style.marginRight = '6px';
+      btnEditar.onclick = () => abrirEdicaoAlunos(i);
+      tdAcoes.appendChild(btnEditar);
+
+      const btnFrequencia = document.createElement('button');
+      btnFrequencia.textContent = 'Registrar Frequência';
+      btnFrequencia.style.marginRight = '6px';
+      btnFrequencia.onclick = () => abrirRegistroFrequencia(i);
+      tdAcoes.appendChild(btnFrequencia);
+
+      const btnExcluir = document.createElement('button');
+      btnExcluir.textContent = 'Excluir Aula';
+      btnExcluir.classList.add('btn-excluir');
+      btnExcluir.onclick = () => {
+        if(confirm('Deseja excluir esta aula?')) {
+          aulas.splice(i, 1);
+          salvarAulas();
+          renderizarAulas();
+          esconderSecoes();
+        }
+      }
+      tdAcoes.appendChild(btnExcluir);
+
+      tr.appendChild(tdAcoes);
+
+      tabelaAulasBody.appendChild(tr);
+    });
+
+    if(aulas.length === 0){
+      esconderSecoes();
+    }
+  }
+
+  function esconderSecoes(){
+    formAlunos.style.display = 'none';
+    frequenciaSection.style.display = 'none';
+    relatorioSection.style.display = 'none';
+  }
+
+  // Salvar aulas no localStorage
+  function salvarAulas(){
+    localStorage.setItem('aulasFrequencia', JSON.stringify(aulas));
+  }
+
+  // Adicionar aula
+  formFrequencia.addEventListener('submit', e => {
+    e.preventDefault();
+    const data = document.getElementById('dataAula').value;
+    const turma = document.getElementById('turma').value;
+
+    if(!data || !turma){
+      alert('Por favor, preencha data e turma.');
+      return;
+    }
+
+    // Verifica se já existe aula na mesma data e turma
+    const aulaExistente = aulas.find(a => a.data === data && a.turma === turma);
+    if(aulaExistente){
+      alert('Já existe uma aula registrada para essa data e turma.');
+      return;
+    }
+
+    aulas.push({
+      data,
+      turma,
+      alunos: [],
+      frequencias: {}  // objeto chave: nomeAluno, valor: true/false
+    });
+
+    salvarAulas();
+    renderizarAulas();
+
+    formFrequencia.reset();
+    esconderSecoes();
+  });
+
+  // Abrir edição de alunos para a aula selecionada
+  function abrirEdicaoAlunos(index) {
+    indexAulaAtualInput.value = index;
+    formAlunos.style.display = 'block';
+    frequenciaSection.style.display = 'none';
+    relatorioSection.style.display = 'none';
+    renderizarAlunosEdicao();
+  }
+
+  // Renderizar alunos para edição (lista simples)
+  function renderizarAlunosEdicao(){
+    // Remove lista antiga (se existir)
+    const listaAntiga = document.querySelector('#listaAlunosEdicao');
+    if(listaAntiga) listaAntiga.remove();
+
+    const index = parseInt(indexAulaAtualInput.value);
+    const aula = aulas[index];
+
+    const lista = document.createElement('ul');
+    lista.id = 'listaAlunosEdicao';
+    lista.style.marginTop = '10px';
+    lista.style.listStyle = 'none';
+
+    aula.alunos.forEach((aluno, i) => {
+      const li = document.createElement('li');
+      li.style.marginBottom = '6px';
+      li.style.display = 'flex';
+      li.style.justifyContent = 'space-between';
+      li.style.alignItems = 'center';
+
+      li.textContent = aluno;
+
+      const btnExcluir = document.createElement('button');
+      btnExcluir.textContent = 'Excluir';
+      btnExcluir.classList.add('btn-excluir');
+      btnExcluir.style.padding = '4px 10px';
+      btnExcluir.style.fontSize = '0.85rem';
+      btnExcluir.onclick = () => {
+        if(confirm(`Excluir aluno "${aluno}"?`)){
+          aula.alunos.splice(i,1);
+          delete aula.frequencias[aluno];
+          salvarAulas();
+          renderizarAlunosEdicao();
+          renderizarRelatorio(index);
+        }
+      }
+
+      li.appendChild(btnExcluir);
+      lista.appendChild(li);
+    });
+
+    formAlunos.appendChild(lista);
+  }
+
+  // Adicionar aluno
+  formAlunos.addEventListener('submit', e => {
+    e.preventDefault();
+    const index = parseInt(indexAulaAtualInput.value);
+    const nomeAluno = nomeAlunoInput.value.trim();
+
+    if(nomeAluno === ''){
+      alert('Digite o nome do aluno.');
+      return;
+    }
+
+    const aula = aulas[index];
+    if(aula.alunos.includes(nomeAluno)){
+      alert('Aluno já está na lista.');
+      return;
+    }
+
+    aula.alunos.push(nomeAluno);
+    aula.frequencias[nomeAluno] = false; // padrão falta
+
+    salvarAulas();
+    renderizarAlunosEdicao();
+    nomeAlunoInput.value = '';
+  });
+
+  // Abrir tela para registrar frequência da aula
+  function abrirRegistroFrequencia(index) {
+    frequenciaSection.style.display = 'block';
+    formAlunos.style.display = 'none';
+    relatorioSection.style.display = 'none';
+    indexAulaAtualInput.value = index;
+
+    const aula = aulas[index];
+    tabelaAlunosFrequenciaBody.innerHTML = '';
+
+    if(aula.alunos.length === 0){
+      tabelaAlunosFrequenciaBody.innerHTML = '<tr><td colspan="2">Nenhum aluno cadastrado para esta aula.</td></tr>';
+      return;
+    }
+
+    aula.alunos.forEach(aluno => {
+      const tr = document.createElement('tr');
+
+      const tdNome = document.createElement('td');
+      tdNome.textContent = aluno;
+      tr.appendChild(tdNome);
+
+      const tdPresenca = document.createElement('td');
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.checked = aula.frequencias[aluno] || false;
+      tdPresenca.appendChild(checkbox);
+      tr.appendChild(tdPresenca);
+
+      tabelaAlunosFrequenciaBody.appendChild(tr);
+    });
+  }
+
+  // Salvar frequência marcada
+  salvarFrequenciaBtn.addEventListener('click', () => {
+    const index = parseInt(indexAulaAtualInput.value);
+    const aula = aulas[index];
+
+    const linhas = tabelaAlunosFrequenciaBody.querySelectorAll('tr');
+    linhas.forEach((tr, i) => {
+      const aluno = aula.alunos[i];
+      const checkbox = tr.querySelector('input[type="checkbox"]');
+      aula.frequencias[aluno] = checkbox.checked;
+    });
+
+    salvarAulas();
+    alert('Frequência salva!');
+    gerarRelatorio(index);
+  });
+
+  // Gerar relatório e mostrar
+  function gerarRelatorio(index){
+    relatorioSection.style.display = 'block';
+    frequenciaSection.style.display = 'none';
+    formAlunos.style.display = 'none';
+
+    const aula = aulas[index];
+    const alunos = aula.alunos;
+    const frequencias = aula.frequencias;
+
+    tabelaRelatorioBody.innerHTML = '';
+
+    alunos.forEach(aluno => {
+      const presencas = frequencias[aluno] ? 1 : 0;
+      const faltas = frequencias[aluno] ? 0 : 1;
+      const percentual = ((presencas / (presencas + faltas)) * 100).toFixed(0);
+
+      const tr = document.createElement('tr');
+
+      const tdNome = document.createElement('td');
+      tdNome.textContent = aluno;
+      tr.appendChild(tdNome);
+
+      const tdPresencas = document.createElement('td');
+      tdPresencas.textContent = presencas;
+      tr.appendChild(tdPresencas);
+
+      const tdFaltas = document.createElement('td');
+      tdFaltas.textContent = faltas;
+      tr.appendChild(tdFaltas);
+
+      const tdPercentual = document.createElement('td');
+      tdPercentual.textContent = percentual + '%';
+      tr.appendChild(tdPercentual);
+
+      tabelaRelatorioBody.appendChild(tr);
+    });
+  }
+
+  // Atualiza relatório para a primeira aula automaticamente, se houver
+  if(aulas.length > 0){
+    renderizarAulas();
+    gerarRelatorio(0);
+  } else {
+    esconderSecoes();
+  }
+
+  btnImprimir.addEventListener('click', () => {
+    window.print();
+  });
+
+</script>
+
+</body>
+</html>
+
+

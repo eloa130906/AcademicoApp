@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Minhas Turmas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">Acadêmico App 🌿</div>
+    <nav class="menu">
+      <ul>
+        <li><a href="professor.html">Inicio</a></li>
+      </ul>
+    </nav>
+    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+  </header>
+
+  <main class="dashboard-container">
+    <section class="welcome">
+      <h1>Minhas Turmas</h1>
+      <p>Confira as turmas que você está ministrando.</p>
+    </section>
+
+    <section class="turmas-lista">
+      <article class="turma-card">
+        <h2>Ensino Médio</h2>
+        <p><strong>Horário:</strong> Segundas, quartas e sextas, 13h às 15h</p>
+        <p><strong>Alunos:</strong> 30</p>
+        <p class="status-turma">Turma Ativa ✅</p>
+      </article>
+
+      <article class="turma-card">
+        <h2>Pré Vestibulinho</h2>
+        <p><strong>Horário:</strong> Terças e quintas, 14h às 16h</p>
+        <p><strong>Alunos:</strong> 25</p>
+        <p class="status-turma">Turma Ativa ✅</p>
+      </article>
+
+      <article class="turma-card">
+        <h2>Pré Vestibular</h2>
+        <p><strong>Horário:</strong> Segundas e quartas, 17h às 19h</p>
+        <p><strong>Alunos:</strong> 20</p>
+        <p class="status-turma">Turma Ativa ✅</p>
+      </article>
+
+      <article class="turma-card">
+        <h2>Empreendedorismo</h2>
+        <p><strong>Horário:</strong> Sextas, 15h às 17h</p>
+        <p><strong>Alunos:</strong> 15</p>
+        <p class="status-turma">Turma Ativa ✅</p>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    const toggle = document.getElementById("menu-toggle");
+    const menu = document.querySelector(".menu");
+    toggle.addEventListener("click", () => {
+      menu.classList.toggle("active");
+    });
+  </script>
+</body>
+</html>

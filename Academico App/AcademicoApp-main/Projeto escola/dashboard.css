@@ -1,0 +1,426 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f9f5f0;
+  color: #3a3a3a;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #fffdf9;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1.5px solid #d8cfc4;
+  position: relative;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.05);
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #5a4a3c;
+  letter-spacing: 1.2px;
+  user-select: none;
+}
+
+.menu ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.menu a {
+  text-decoration: none;
+  color: #6d5b4a;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.menu a:hover {
+  color: #a77e58;
+  text-decoration: underline;
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #6d5b4a;
+  user-select: none;
+}
+
+@media (max-width: 768px) {
+  .menu {
+    display: none;
+    flex-direction: column;
+    background-color: #fffdf9;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.12);
+    border-top: 1px solid #d8cfc4;
+    z-index: 99;
+  }
+
+  .menu.active {
+    display: flex;
+  }
+
+  .menu ul {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+}
+
+/* Container principal */
+.dashboard-container {
+  flex-grow: 1;
+  max-width: 900px;
+  width: 95%;
+  margin: 3rem auto 2rem;
+  text-align: center;
+}
+
+/* Seção de boas-vindas */
+.welcome h1 {
+  font-size: 2.2rem;
+  color: #5a4a3c;
+  margin-bottom: 0.5rem;
+}
+
+.welcome p {
+  font-size: 1.1rem;
+  color: #6d5b4a;
+  margin-bottom: 2rem;
+}
+
+/* Cartões */
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.card {
+  background-color: #fffdf9;
+  box-shadow: 0 8px 20px rgba(168, 144, 110, 0.3);
+  border-radius: 1rem;
+  width: 250px;
+  min-width: 200px; /* adicionado para evitar cards muito pequenos */
+  padding: 1.5rem;
+  text-decoration: none;
+  color: #5a4a3c;
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 12px 30px rgba(167, 126, 88, 0.6);
+}
+
+.card h2 {
+  margin-bottom: 0.8rem;
+  font-weight: 700;
+}
+
+.card p {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/* Rodapé */
+.footer {
+  background-color: #fffdf9;
+  text-align: center;
+  padding: 1rem 0;
+  border-top: 1.5px solid #d8cfc4;
+  color: #6d5b4a;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Página de perfil */
+main {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background:  #d8cfc4;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+main h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-top: 1rem;
+}
+
+input, select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Botão */
+button {
+  margin-top: 1.5rem;
+  padding: 10px;
+  background-color: #6d5b4a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+/* Corrigido hover para ter efeito visual diferente */
+button:hover {
+  background-color: #a77e58;
+}
+
+/* Informações do perfil */
+.perfil-info {
+  margin-bottom: 2rem;
+}
+
+.perfil-info p {
+  margin: 0.5rem 0;
+}
+
+/* Formulário de edição do perfil */
+.perfil-form {
+  display: none;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+
+
+/* parte turmas.html */
+
+/* Lista de turmas */
+.turmas-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 700px;
+  margin: 0 auto 3rem;
+  text-align: left;
+}
+
+.turma-card {
+  background-color: #fffdf9;
+  box-shadow: 0 6px 16px rgba(167, 126, 88, 0.2);
+  padding: 1.8rem 2rem;
+  border-radius: 1rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.turma-card:hover {
+  box-shadow: 0 12px 30px rgba(167, 126, 88, 0.5);
+}
+
+.turma-card h2 {
+  color: #5a4a3c;
+  margin-bottom: 0.6rem;
+}
+
+.turma-card p {
+  color: #6d5b4a;
+  margin-bottom: 0.4rem;
+  font-size: 1rem;
+}
+
+.btn-ver-alunos {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  background-color: #a77e58;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.btn-ver-alunos:hover {
+  background-color: #8a6644;
+}
+
+.status-turma {
+  background-color: #e0f7e9;
+  color: #2e7d32;
+  font-weight: bold;
+  padding: 6px 10px;
+  border-radius: 8px;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+
+
+/* plano professor*/
+
+.formulario-plano,
+.lista-planos {
+  background-color: #fffdf9;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 6px 16px rgba(167, 126, 88, 0.15);
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.formulario-plano h2,
+.lista-planos h2 {
+  color: #5a4a3c;
+  margin-bottom: 1rem;
+}
+
+.formulario-plano form label {
+  font-weight: bold;
+  margin-top: 1rem;
+  display: block;
+}
+
+.formulario-plano input,
+.formulario-plano textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 5px;
+  margin-bottom: 1rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.lista-planos ul {
+  list-style: none;
+  padding: 0;
+}
+
+.lista-planos li {
+  padding: 1rem;
+  border-bottom: 1px solid #d8cfc4;
+}
+
+
+
+/* Estilização dos planos criados */
+.planos-lista {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem 0;
+  margin-top: 1rem;
+}
+
+.plano-card {
+  background-color: #fffdf9;
+  border-left: 5px solid #a77e58;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 1.2rem 1rem;
+  border-radius: 12px;
+  transition: transform 0.2s ease;
+  margin-bottom: 1.5rem;
+}
+
+.plano-card:hover {
+  transform: translateY(-4px);
+}
+
+.plano-topo {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: 0.6rem;
+  color: #6d5b4a;
+  font-weight: 600;
+}
+
+.plano-card h3 {
+  font-size: 1.1rem;
+  color: #5a4a3c;
+  margin-bottom: 0.4rem;
+}
+
+.plano-card p {
+  font-size: 0.95rem;
+  color: #6d5b4a;
+  margin-bottom: 0.3rem;
+}
+
+
+
+ button {
+      margin-top: 1rem;
+      padding: 10px;
+      background-color: #a77e58;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #5a4a3c;
+    }
+    .btn-add {
+  position: fixed;
+  top: 40rem;
+  right: 1.5rem;
+  background-color: #a77e58;
+  border: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(167,126,88,0.6);
+  transition: background-color 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  z-index: 100;
+}
+
+.btn-add:hover {
+  background-color: #8a6a43;
+  box-shadow: 0 7px 25px rgba(138,106,67,0.8);
+}
+
+
+

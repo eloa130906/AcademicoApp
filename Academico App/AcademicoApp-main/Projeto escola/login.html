@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="login.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">Acadêmico App 🌿</div>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+        <li><a href="cursos.html">Cursos</a></li>
+        <li><a href="contato.html">Contato</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+    </nav>
+    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+  </header>
+
+  <div class="login-container">
+    <h1>Login Acadêmico App</h1>
+    <form id="loginForm" action="#" method="post" class="login-form">
+      <label for="tipo">Entrar como:</label>
+
+      <select id="tipo" name="tipo" required>
+        <option value="">Selecione</option>
+        <option value="professor">Professor</option>
+        <option value="aluno">Estudante</option>
+        <option value="secretaria">Secretaria</option>
+
+      </select>
+
+      <label for="email">E-mail:</label>
+      <input type="text" id="email" name="email" required placeholder="Digite seu login" />
+
+      <label for="senha">Senha:</label>
+      <input type="password" id="senha" name="senha" required placeholder="Digite a senha" />
+
+      <button type="submit" class="ripple">Entrar</button>
+    </form>
+  </div>
+
+  <script>
+  // Toggle menu mobile
+  const toggle = document.getElementById("menu-toggle");
+  const menu = document.querySelector(".menu");
+  toggle.addEventListener("click", () => {
+    menu.classList.toggle("active");
+  });
+
+  // Validação do login
+  const loginForm = document.getElementById('loginForm');
+  loginForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const tipo = document.getElementById('tipo').value.trim().toLowerCase();
+    const email = document.getElementById('email').value.trim().toLowerCase();
+    const senha = document.getElementById('senha').value;
+
+    const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+
+    if (email === '123' && senha === '123') {
+      alert('Login padrão bem-sucedido!');
+
+      // Redirecionamento com base no tipo
+      if (tipo === 'professor') {
+        window.location.href = 'professor.html';
+      } else if (tipo === 'aluno') {
+        window.location.href = 'aluno.html';
+      } else if (tipo === 'secretaria') {
+        window.location.href = 'secretaria.html';
+      } else {
+        alert('Tipo de usuário não reconhecido.');
+      }
+      return; // Para evitar a checagem abaixo
+    }
+
+    // Verifica se existe um usuário com email, senha E tipo correspondente
+    const usuarioValido = usuarios.find(user =>
+      user.email === email &&
+      user.senha === senha &&
+      user.tipo === tipo
+    );
+
+    if (usuarioValido) {
+      localStorage.setItem('usuarioLogadoEmail', email);
+      alert('Login bem-sucedido!');
+
+      // Redirecionamento com base no tipo
+      if (tipo === 'professor') {
+        window.location.href = 'professor.html';
+      } else if (tipo === 'aluno') {
+        window.location.href = 'aluno.html';
+      } else if (tipo === 'secretaria') {
+        window.location.href = 'secretaria.html';
+      } else {
+        alert('Tipo de usuário não reconhecido.');
+      }
+
+    } else {
+      alert('Email, senha ou tipo incorretos.');
+    }
+  });
+</script>
+
+
+  <script src="ripple.js"></script>
+</body>
+</html>

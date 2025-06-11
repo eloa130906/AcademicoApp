@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Material Didático</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="material_didatico.css" />
+</head>
+<body>
+
+<header>
+  <div class="logo">Acadêmico App 🌿</div>
+  <nav>
+    <a href="professor.html">Início</a>
+  </nav>
+</header>
+
+<main>
+  <h1>Material Didático</h1>
+  <p>Adicione e organize seus recursos didáticos com facilidade.</p>
+
+  <form id="formRecurso">
+  <input type="text" id="titulo" placeholder="Título do material" required />
+  <select id="tipo" required>
+    <option value="" disabled selected>Tipo de recurso</option>
+    <option value="documento">📄 Documento</option>
+    <option value="link">🔗 Link</option>
+  </select>
+  
+  <input type="url" id="link" placeholder="URL do recurso" required />
+  <input type="file" id="arquivo" style="display: none;" />
+
+  <button type="submit">Adicionar</button>
+</form>
+
+
+  <div class="cards-container" id="recursosContainer">
+    <p class="empty-message" id="emptyMessage">Nenhum recurso adicionado ainda.</p>
+  </div>
+</main>
+
+<script>
+  const form = document.getElementById('formRecurso');
+  const container = document.getElementById('recursosContainer');
+  const emptyMsg = document.getElementById('emptyMessage');
+  const tipo = document.getElementById('tipo');
+  const linkInput = document.getElementById('link');
+  const fileInput = document.getElementById('arquivo');
+
+  const icons = {
+    documento: '📄',
+    video: '🎬',
+    link: '🔗'
+  };
+
+  tipo.addEventListener('change', () => {
+    if (tipo.value === 'documento' || tipo.value === 'video') {
+      linkInput.style.display = 'none';
+      fileInput.style.display = 'block';
+      fileInput.required = true;
+      linkInput.required = false;
+    } else {
+      linkInput.style.display = 'block';
+      fileInput.style.display = 'none';
+      fileInput.required = false;
+      linkInput.required = true;
+    }
+  });
+
+  function criarCard(titulo, tipo, link, nomeArquivo = null) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+
+    let aTag = '';
+    if ((tipo === 'documento' || tipo === 'video') && nomeArquivo) {
+      // base64 no href, com download
+      aTag = `<a href="${link}" download="${nomeArquivo}">${nomeArquivo}</a>`;
+    } else {
+      aTag = `<a href="${link}" target="_blank" rel="noopener noreferrer">${link}</a>`;
+    }
+
+    card.innerHTML = `
+      <button class="btn-delete" title="Remover recurso">×</button>
+      <div class="type-icon">${icons[tipo] || '📁'}</div>
+      <h3>${titulo}</h3>
+      ${aTag}
+    `;
+
+    card.querySelector('.btn-delete').addEventListener('click', () => {
+      card.remove();
+      salvarLocalStorage();
+      checarVazio();
+    });
+
+    return card;
+  }
+
+  function salvarLocalStorage() {
+    const cards = container.querySelectorAll('.card');
+    const recursos = [];
+
+    cards.forEach(card => {
+      const titulo = card.querySelector('h3').innerText;
+      const link = card.querySelector('a').href;
+      const tipoIcon = card.querySelector('.type-icon').innerText;
+      const tipo = Object.keys(icons).find(key => icons[key] === tipoIcon);
+      const nomeArquivo = card.querySelector('a').getAttribute('download') || null;
+
+      recursos.push({ titulo, tipo, link, nomeArquivo });
+    });
+
+    localStorage.setItem('recursosDidaticos', JSON.stringify(recursos));
+  }
+
+  function carregarLocalStorage() {
+    const dados = localStorage.getItem('recursosDidaticos');
+    if (dados) {
+      const recursos = JSON.parse(dados);
+      recursos.forEach(({ titulo, tipo, link, nomeArquivo }) => {
+        const card = criarCard(titulo, tipo, link, nomeArquivo);
+        container.appendChild(card);
+      });
+      checarVazio();
+    }
+  }
+
+  function checarVazio() {
+    emptyMsg.style.display = container.children.length === 0 ? 'block' : 'none';
+  }
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const titulo = form.titulo.value.trim();
+    const tipoValor = tipo.value;
+
+    if (!titulo || !tipoValor) return;
+
+    if (tipoValor === 'link') {
+      const linkFinal = linkInput.value.trim();
+      if (!linkFinal) {
+        alert('Por favor, insira uma URL.');
+        return;
+      }
+      const novoRecurso = { titulo, tipo: tipoValor, link: linkFinal, nomeArquivo: null };
+      adicionarRecurso(novoRecurso);
+    } else if (fileInput.files.length > 0) {
+      const arquivo = fileInput.files[0];
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const base64 = evt.target.result; // ex: data:application/pdf;base64,....
+        const novoRecurso = {
+          titulo,
+          tipo: tipoValor,
+          link: base64,
+          nomeArquivo: arquivo.name
+        };
+        adicionarRecurso(novoRecurso);
+      };
+      reader.readAsDataURL(arquivo);
+    } else {
+      alert('Por favor, selecione um arquivo ou insira um link.');
+    }
+  });
+
+  function adicionarRecurso(recurso) {
+    const dados = localStorage.getItem('recursosDidaticos');
+    const recursos = dados ? JSON.parse(dados) : [];
+
+    recursos.push(recurso);
+    localStorage.setItem('recursosDidaticos', JSON.stringify(recursos));
+
+    const novoCard = criarCard(recurso.titulo, recurso.tipo, recurso.link, recurso.nomeArquivo);
+    container.appendChild(novoCard);
+    checarVazio();
+
+    form.reset();
+    tipo.selectedIndex = 0;
+    fileInput.style.display = 'none';
+    linkInput.style.display = 'block';
+    fileInput.required = false;
+    linkInput.required = true;
+  }
+
+  // Inicialização
+  carregarLocalStorage();
+  checarVazio();
+</script>
+
+
+
+</body>
+</html>

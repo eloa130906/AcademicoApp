@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Adicionar avisos</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="adicionar-avisos.css" />
+  
+</head>
+<body>
+<header class="navbar">
+    <div class="logo">Acadêmico App 🌿</div>
+    <nav class="menu" id="menu">
+      <ul>
+        <li><a href="secretaria.html">Início</a></li>
+        <li><a href="matricula.html">Cadastro</a></li>
+        <li><a href="avisos-secretaria.html">Avisos</a></li>
+        <li><a href="perfil-secretaria.html">Perfil</a></li>
+        <li><a href="login.html">Sair</a></li>
+      </ul>
+    </nav>
+    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+  </header>
+
+<h1>Adicionar Post-its</h1>
+
+<form id="postitForm">
+  <label for="postitText">Digite seu post-it:</label>
+  <textarea id="postitText" name="postitText" required placeholder="Escreva algo..."></textarea>
+  <button type="submit">Adicionar</button>
+</form>
+
+<div class="postit-container" id="postitContainer">
+  <!-- Post-its vão aparecer aqui -->
+</div>
+
+<script>
+  const form = document.getElementById('postitForm');
+  const textarea = document.getElementById('postitText');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const text = textarea.value.trim();
+    if (text) {
+      // Recupera os post-its antigos ou cria um array novo
+      const postits = JSON.parse(localStorage.getItem('postits')) || [];
+
+      // Adiciona o novo post-it
+      postits.push(text);
+
+      // Salva de volta no localStorage
+      localStorage.setItem('postits', JSON.stringify(postits));
+
+      // Redireciona para a página de avisos/post-its
+      window.location.href = 'avisos-secretaria.html';
+    }
+  });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avisos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="avisos-secretaria.css" />
+  
+</head>
+<body>
+     <header class="navbar">
+    <div class="logo">Acadêmico App 🌿</div>
+    <nav class="menu">
+      <ul>
+        <li><a href="aluno.html">Início</a></li>
+        <li><a href="login.html">Sair</a></li>
+      </ul>
+    </nav>
+    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+  </header>
+    <main class="postit-container" id="postitContainer">
+  <h1>Avisos da Secretaria</h1>
+</main>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('postitContainer');
+    const postits = JSON.parse(localStorage.getItem('postits')) || [];
+
+    postits.forEach(text => {
+      const card = document.createElement('div');
+      card.classList.add('aviso-card');
+      card.innerHTML = `<p>${text}</p>`;
+      container.appendChild(card);
+    });
+  });
+</script>
+
+</body>
+</html>

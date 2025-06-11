@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Plano de Aula</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="dashboard.css" />
+</head> 
+<body>
+  <header class="navbar">
+    <div class="logo">Acadêmico App 🌿</div>
+    <nav class="menu">
+      <ul>
+        <li><a href="professor.html">Início</a></li>
+      </ul>
+    </nav>
+    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+  </header>
+
+  <main class="dashboard-container">
+   
+
+    <!-- Lista de Planos -->
+    
+    <section class="lista-planos">
+    <center><h2>📘 Planos Criados</h2></center>
+    <div id="planosSalvos" class="planos-container">
+        <!-- Os planos criados aparecerão aqui como cartões -->
+  </div>
+    </section>
+  </main>
+
+ <button class="btn-add" onclick="window.location.href='adicionar-plano.html'" aria-label="Adicionar aviso">+</button>
+
+
+<script>
+  const toggle = document.getElementById("menu-toggle");
+  const menu = document.querySelector(".menu");
+  toggle.addEventListener("click", () => {
+    menu.classList.toggle("active");
+  });
+
+  const lista = document.getElementById("planosSalvos");
+
+  function carregarPlanos() {
+    const planos = JSON.parse(localStorage.getItem("planos")) || [];
+
+    planos.forEach((plano, index) => {
+      const item = document.createElement("div");
+      item.classList.add("plano-card");
+
+      const btnDelete = document.createElement("button");
+      btnDelete.classList.add("btn-delete");
+      btnDelete.innerHTML = "🗑️";
+      btnDelete.setAttribute("aria-label", "Excluir plano");
+
+      btnDelete.addEventListener("click", () => {
+        planos.splice(index, 1);
+        localStorage.setItem("planos", JSON.stringify(planos));
+        item.remove();
+      });
+
+      item.innerHTML = `
+        <div class="plano-topo">
+          <span class="plano-data">${plano.data}</span>
+          <span class="plano-turma">${plano.turma}</span>
+        </div>
+        <h3>${plano.tema}</h3>
+        <p><strong>Objetivos:</strong> ${plano.objetivos}</p>
+        <p><strong>Atividades:</strong> ${plano.atividades}</p>
+      `;
+
+      item.appendChild(btnDelete);
+      lista.appendChild(item);
+    });
+  }
+
+  // Carrega os planos ao abrir a página
+  window.addEventListener("DOMContentLoaded", carregarPlanos);
+</script>
+
+
+</body>
+</html>

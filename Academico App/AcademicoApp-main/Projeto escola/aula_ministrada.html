@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Material da Aula - Visualização</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="material_didatico.css" />
+</head>
+<body>
+
+<header>
+  <div class="logo">Acadêmico App 🌿</div>
+  <nav>
+    <a href="aluno.html">Início</a>
+  </nav>
+</header>
+
+<main>
+  <h1>Material da Aula</h1>
+  <p>Veja abaixo os recursos adicionados para esta aula.</p>
+
+  <div class="cards-container" id="recursosContainer">
+    <p class="empty-message" id="emptyMessage">Nenhum recurso foi adicionado.</p>
+  </div>
+</main>
+<script>
+  const container = document.getElementById('recursosContainer');
+  const emptyMsg = document.getElementById('emptyMessage');
+
+  const icons = {
+    documento: '📄',
+    video: '🎬',
+    link: '🔗'
+  };
+
+  // Função para criar o card SEM botão de deletar
+  function criarCard(titulo, tipo, link, nomeArquivo = null) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+
+    let aTag = '';
+
+    if ((tipo === 'documento' || tipo === 'video') && nomeArquivo) {
+      // Link base64 para download
+      aTag = `<a href="${link}" download="${nomeArquivo}">${nomeArquivo}</a>`;
+    } else {
+      // Link externo (URL normal)
+      aTag = `<a href="${link}" target="_blank" rel="noopener noreferrer">${link}</a>`;
+    }
+
+    card.innerHTML = `
+      <div class="type-icon">${icons[tipo] || '📁'}</div>
+      <h3>${titulo}</h3>
+      ${aTag}
+    `;
+
+    return card;
+  }
+
+  // Carrega os arquivos do localStorage e mostra
+  function carregarLocalStorage() {
+    const dados = localStorage.getItem('recursosDidaticos');
+    if (dados) {
+      const recursos = JSON.parse(dados);
+      recursos.forEach(({ titulo, tipo, link, nomeArquivo }) => {
+        const card = criarCard(titulo, tipo, link, nomeArquivo);
+        container.appendChild(card);
+      });
+    }
+    checarVazio();
+  }
+
+  // Mostra mensagem caso não haja arquivos
+  function checarVazio() {
+    emptyMsg.style.display = container.children.length === 0 ? 'block' : 'none';
+  }
+
+  // Inicializa a exibição
+  carregarLocalStorage();
+</script>
+
+
+</body>
+</html>

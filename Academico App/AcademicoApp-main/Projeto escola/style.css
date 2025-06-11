@@ -1,0 +1,490 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f5f0; 
+  color: #3a3a3a;
+  overflow-x: hidden;
+}
+body {
+  overflow-x: hidden;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #fffdf9;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1.5px solid #d8cfc4;
+  position: relative;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.05);
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #5a4a3c;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 1.2px;
+}
+
+.menu ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.menu a {
+  text-decoration: none;
+  color: #6d5b4a;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.menu a:hover {
+  color: #a77e58;
+  text-decoration: underline;
+}
+
+/* Botão hambúrguer */
+.menu-toggle {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #6d5b4a;
+}
+
+/* Responsivo Navbar */
+@media (max-width: 768px) {
+  .menu {
+    display: none;
+    flex-direction: column;
+    background-color: #fffdf9;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.12);
+    border-top: 1px solid #d8cfc4;
+    z-index: 99;
+  }
+
+  .menu.active {
+    display: flex;
+  }
+
+  .menu ul {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .inicio-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .inicio-imagem {
+    margin-top: 2rem;
+  }
+}
+
+/* Conteúdo principal */
+main {
+  margin: 0;
+  padding: 0;
+  background: none;
+}
+
+/* Títulos */
+h1, h2 {
+  color: #5a4a3c;
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 1rem;
+}
+
+/* Seções */
+.inicio,
+.sobre,
+.cursos,
+.contato {
+  width: 100vw;
+}
+
+.inicio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 1.5rem;
+  background-color: #f4efe9;
+  min-height: 86vh;  
+}
+
+.inicio-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  width: 100%;
+  gap: 2rem;
+}
+
+.inicio-texto {
+  flex: 1;
+  min-width: 280px;
+}
+
+.inicio-texto h1 {
+  font-size: 2.5rem;
+  color: #5a4a3c;
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 1rem;
+}
+
+.inicio-texto h1 span {
+  color: #a77e58;
+}
+
+.inicio-texto p {
+  font-size: 1.2rem;
+  color: #5c5449;
+  line-height: 1.6;
+}
+
+.inicio-imagem {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  min-width: 280px;
+}
+
+.inicio-imagem img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Outras seções */
+.sobre, .cursos, .contato {
+  padding: 4rem 2rem;
+  background-color: #fff;
+}
+
+.sobre:nth-child(even), .cursos:nth-child(even), .contato:nth-child(even) {
+  background-color: #f4efe9;
+}
+
+.cursos ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  color: #5c5449;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin-bottom: 1.2rem;
+}
+
+.imagem-escola {
+  max-width: 100%;
+  height: auto;
+  margin-top: 1.8rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgb(90 74 60 / 0.1);
+  object-fit: cover;
+}
+
+/* Rodapé */
+footer {
+  background-color: #5a4a3c;
+  color: #f9f5f0;
+  text-align: center;
+  padding: 1.5rem 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Sobre */
+.sobre {
+  width: 100%;
+  padding: 4rem 2rem;
+  background-color: #f4efe9;
+  font-size: 1.2rem;
+  line-height: 1.7;
+  color: #5c5449;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 86vh;  
+}
+
+.sobre h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #5a4a3c;
+  margin-bottom: 2rem;
+  text-align: center;
+  letter-spacing: 1.2px;
+}
+
+.sobre p {
+  margin-bottom: 1.5rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: justify;
+}
+
+.sobre strong {
+  color: #a77e58;
+}
+
+/* Responsividade sobre */
+@media (max-width: 768px) {
+  .sobre {
+    padding: 3rem 1.2rem;
+  }
+
+  .sobre h2 {
+    font-size: 2rem;
+  }
+
+  .sobre p {
+    font-size: 1rem;
+  }
+}
+
+.sobre-container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Cursos */
+.cursos {
+  padding: 4rem 2rem;
+  background-color: #fff;
+  min-height: 86vh;
+  text-align: center;
+}
+
+.cursos h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.5rem;
+  color: #5a4a3c;
+  margin-bottom: 3rem;
+}
+
+.cursos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.curso-card {
+  background-color: #f4efe9;
+  padding: 2rem;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(90, 74, 60, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.curso-card:hover {
+  transform: translateY(-6px);
+}
+
+.curso-icon {
+  font-size: 3rem;
+  color: #a77e58;
+  margin-bottom: 1rem;
+}
+
+.curso-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.8rem;
+  color: #5a4a3c;
+}
+
+.curso-card p {
+  color: #5c5449;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Contato (unificado do contato.css) */
+body.contato-body {
+  background-color: #fdf6ee;
+  color: #5d4037;
+}
+
+.navbar.contato-navbar {
+  background-color: #efe7dc;
+  border-bottom: 2px solid #d7ccc8;
+}
+
+.logo.contato-logo {
+  color: #795548;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.menu.contato-menu a {
+  color: #5d4037;
+  font-weight: 500;
+}
+
+.menu.contato-menu a:hover {
+  color: #8d6e63;
+}
+
+.menu-toggle.contato-menu-toggle {
+  color: #795548;
+}
+
+/* Container principal da página de contato */
+.contato-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 4rem 2rem;
+  gap: 2rem;
+  min-height: 86vh;
+}
+
+/* Metade esquerda: informações */
+.contato-info {
+  flex: 1 1 400px;
+  background-color: #f5eee3;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(160, 136, 127, 0.15);
+}
+
+.contato-info h2 {
+  margin-bottom: 1rem;
+  color: #6d4c41;
+}
+
+.contato-info ul {
+  list-style: none;
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+/* Metade direita: formulário */
+.contato-form {
+  flex: 1 1 400px;
+  background-color: #fffaf5;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(160, 136, 127, 0.15);
+}
+
+.contato-form h2 {
+  margin-bottom: 1rem;
+  color: #6d4c41;
+}
+
+.contato-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contato-form input,
+.contato-form textarea {
+  padding: 0.75rem;
+  border: 1px solid #d7ccc8;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #fffaf5;
+  color: #5d4037;
+}
+
+.contato-form input:focus,
+.contato-form textarea:focus {
+  outline: none;
+  border-color: #a1887f;
+  box-shadow: 0 0 0 2px #efebe9;
+}
+
+.contato-form button {
+  padding: 0.8rem 1.2rem;
+  background-color: #a1887f;
+  color: #fffaf5;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.contato-form button:hover {
+  background-color: #8d6e63;
+}
+
+/* Responsivo contato */
+@media (max-width: 768px) {
+  .contato-container {
+    flex-direction: column;
+  }
+
+  .menu {
+    display: none;
+    flex-direction: column;
+    background-color: #efe7dc;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .menu.active {
+    display: flex;
+  }
+
+  .menu ul {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+
+
+
+/* Efeito Ripple */
+.ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.circle {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.6); /* tom claro para combinar com o botão */
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 0.5s linear;
+  width: 100px;
+  height: 100px;
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
